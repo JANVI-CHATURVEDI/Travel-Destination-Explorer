@@ -1,0 +1,1 @@
+1. at the top of travel destination explorer , there was a white space showing at top even body was showing 0 margin , it was html problem ,   we removed it using pt-2  in app.jsx
