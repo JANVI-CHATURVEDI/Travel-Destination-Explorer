@@ -3,9 +3,8 @@
 > Discover places. Filter by vibes. Explore on map.  
 A stylish, responsive travel app built with **React**, **Tailwind CSS**, and **Leaflet.js** — to help users search, filter, and explore dreamy destinations visually.
 
-[🌐 Live Demo](https://travel-destination-explorer-neon.vercel.app/)  
-[📁 GitHub Repo](https://github.com/JANVI-CHATURVEDI/Travel-Destination-Explorer)
-
+ 
+[![Live Demo](https://img.shields.io/badge/-🌐%20Live%20Demo-blueviolet?style=for-the-badge)](https://travel-destination-explorer-neon.vercel.app/)
 ---
 
 ## 🛠 Tech Stack
