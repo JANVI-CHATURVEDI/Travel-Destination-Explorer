@@ -1,12 +1,30 @@
-# React + Vite
+# 🌍 Travel Destination Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Discover places. Filter by vibes. Explore on map.  
+A stylish, responsive travel app built with **React**, **Tailwind CSS**, and **Leaflet.js** — to help users search, filter, and explore dreamy destinations visually.
 
-Currently, two official plugins are available:
+[🌐 Live Demo](https://travel-destination-explorer-neon.vercel.app/)  
+[📁 GitHub Repo](https://github.com/JANVI-CHATURVEDI/Travel-Destination-Explorer)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** — for building component-based UI  
+- **Tailwind CSS** — for fast, responsive styling  
+- **Leaflet.js** — for interactive map and location pins  
+- **Vite** — for fast dev and build setup
+
+---
+
+## ✨ Key Features
+
+- 🔍 Search destinations by name  
+- 🎯 Filter by Continent, Vibe, Budget, and Rating  
+- 🗺️ Explore filtered places on an interactive map  
+- 📦 Beautiful card layout with hover + selection  
+- 🔁 Reset all filters with one click  
+- 💻 Fully responsive on all screen sizes
+
+
+
