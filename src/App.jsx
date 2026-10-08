@@ -1,22 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DestinationList from './components/DestinationList';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import LandingPage from './components/LandingPage';
+import ExplorePage from './components/ExplorePage';
+import DestinationDetail from './components/DestinationDetail';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/explore"
-          element={
-            <div className="min-h-screen bg-gray-100 pt-2">
-              <h1 className="text-3xl font-bold text-center my-6">Travel Destination Explorer</h1>
-              <DestinationList />
-            </div>
-          }
-        />
-      </Routes>
+      <div className="flex min-h-screen flex-col bg-stone-50">
+        <Navbar />
+        <main className="flex-1">
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/explore/:id" element={<DestinationDetail />} />
+            </Routes>
+          </ErrorBoundary>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }
