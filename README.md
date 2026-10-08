@@ -1,61 +1,110 @@
-# 🌍 Travel Destination Explorer — Live Edition
+# Travel Destination Explorer — Live Deep-Guide Edition
 
-> Discover places with **live photos, live weather and live country facts**. No stale hard-coded content.
-> Built with **React + Vite + Tailwind + Leaflet + React Router**.
+> Discover places with **live photos, live weather, live climate, live hotels, restaurants and sights**.
+> No stale hard-coded content. Built with **React + Vite + Tailwind CSS + Leaflet + React Router**.
 
-Live demo: `https://travel-destination-explorer-neon.vercel.app/`
+**Live demo:** https://travel-destination-explorer-neon.vercel.app/
 
-## ✨ What it does
+![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet&logoColor=white)
+![APIs](https://img.shields.io/badge/APIs-5_live-keyless-emerald)
 
-- **Premium landing page** with hero, live-API badges and top-rated preview
-- **Explore page** (`/explore`) — search + filters (region, vibe, budget, rating) + sort (rating, A–Z, warmest now using live temps). Filters sync to the URL, e.g. `/explore?continent=Asia&sort=temp`
-- **Detail pages** (`/explore/:id`, e.g. `/explore/kyoto`) — hero photo, about, country facts, 5-day forecast, interactive map, nearby escapes
-- **Interactive map** — auto fit-bounds, click pins for quick links
-- **24 curated places** across 6 regions
+## What it does
 
-## 🔌 Live APIs (free, no keys)
+**Landing page**
+- Cinematic hero with working search, trending chips, live stats and a destinations marquee
+- Top-rated places with live Wikipedia photos, rank badges and hover zoom
+- Auto-rotating **mood orbit wheel** (pauses on hover) with search at its center, plus an auto-scrolling rail on mobile
+- Browse-by-region gradient cards, "how the live data works" section, closing CTA band
+
+**Explorer (`/explore`)**
+- Search + filters (region, vibe, budget, rating) + sort (top rated, A–Z, warmest right now using live temps)
+- Filters sync to the URL — every view is shareable, e.g. `/explore?continent=Asia&sort=temp`
+- Interactive map with auto fit-bounds; hovering a card focuses its pin
+- Hovering any card **prefetches** its hotels, restaurants and climate so the detail page opens instantly
+
+**Deep guide (`/explore/:id`, e.g. `/explore/kyoto`)**
+- Sticky scroll-spy section nav: Overview · Best time · Don't miss · Stay · Eat · Facts · Budget
+- **Best time to visit** — 12-month climate chart scored live from Open-Meteo archive records, top-3 months with data-driven reasons
+- **Don't miss Top 5** — sights ranked live from map-data richness, each with a live Wikipedia blurb and why-chips
+- **Where to stay** — live hotels/hostels with stars, distance and websites
+- **Where to eat** — live restaurants with **Veg only / Veg-friendly / Vegan filters** (real OpenStreetMap diet tags), cuisine bars and a "Taste of {country}" card from Wikipedia
+- **Did you know?** — local time, elevation, sunrise/sunset, food-scene and POI counts, coordinates — all derived live
+- **Plan & budget** — Sleep/Eat/Move bars with honest editorial ranges plus local currency
+- Map with toggleable Stay/Eat/Sights pin layers, Google Maps + Wikipedia links, nearby escapes
+
+**Engineering**
+- Custom premium SVG icon system (zero emojis in the UI), Playfair Display + Inter type pairing
+- Session-cached API layer with timeouts, retries and fallback hosts — a dead API shows a message, never a blank page
+- Error boundary around all routes with a recovery screen
+
+## Live APIs (all free, all keyless)
 
 | Content | API |
 |---|---|
-| Photo + description | Wikipedia REST `api/rest_v1/page/summary/{title}` |
-| Current + 5-day weather | Open-Meteo `api.open-meteo.com/v1/forecast` |
-| Capital + population | CountriesNow `countriesnow.space` (free, keyless) |
+| Photos + descriptions + sight blurbs + cuisine articles | Wikipedia REST `api/rest_v1/page/summary/{title}` |
+| Current weather + 5-day forecast + timezone + sunrise/sunset | Open-Meteo `api.open-meteo.com/v1/forecast` |
+| 12-month climate history for best-time scoring | Open-Meteo `archive-api.open-meteo.com/v1/archive` |
+| Elevation | Open-Meteo `api.open-meteo.com/v1/elevation` |
+| Hotels, restaurants, sights (+ cuisine, diet, stars, hours tags) | Overpass (OpenStreetMap) with fallback mirror |
+| Capital + population + currency | CountriesNow `countriesnow.space` |
 | Flags | FlagCDN image CDN `flagcdn.com` |
-| Country blurb | Wikipedia summary of the country |
 
-Responses are cached in `sessionStorage` (6h content, 30min weather). If an API fails, the UI degrades gracefully to a picsum fallback image and editorial text.
+Responses are cached in `sessionStorage` (content 6h, weather 30min, POIs 24h, climate 7 days).
 
-`src/data/placesIndex.js` holds **only stable IDs + coordinates + editorial tags** (vibe/budget/rating are subjective curation, like Airbnb categories — not factual data). Everything you *see* loads live; see `src/lib/api.js`.
+### What's live vs editorial
 
-## 🛠 Run it
+`src/data/placesIndex.js` holds **only stable IDs + coordinates + subjective tags** (vibe / budget / rating are curation, like Airbnb categories). Everything factual you see — photos, weather, climate, POIs, facts — loads live. Budget ranges and crowd hints are editorial estimates and labeled as such.
+
+## Run it
+
+Requirements: Node 18+.
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # production build → dist/
-npm run preview
+npm run preview  # preview the production build
 ```
 
-## 🗺 Routes
+## Routes
 
-- `/` — landing
-- `/explore` — live explorer (query params: `q, continent, vibe, budget, rating, sort`)
-- `/explore/:id` — detail (e.g. `/explore/petra`, `/explore/banff`)
+| Route | Page |
+|---|---|
+| `/` | Landing |
+| `/explore` | Live explorer (params: `q, continent, vibe, budget, rating, sort`) |
+| `/explore/:id` | Deep guide (e.g. `/explore/petra`, `/explore/banff`) |
 
-## 📁 Structure
+## Project structure
 
 ```
 src/
-  lib/api.js            # Wikipedia / Open-Meteo / REST Countries + cache
-  data/placesIndex.js   # IDs + coords + editorial tags only
-  hooks/useLivePlaces.js# enrichment hooks (concurrency-limited)
+  lib/
+    api.js        # Wikipedia / Open-Meteo / CountriesNow + cache, retries
+    pois.js       # Overpass POI engine (stay / eat / sights, veg + cuisine parsing)
+    climate.js    # 12-month best-time scoring engine
+  data/
+    placesIndex.js  # IDs + coordinates + editorial tags only
+  hooks/
+    useLivePlaces.js  # enrichment hooks (places, place, climate, POIs, summary, elevation)
   components/
-    Navbar.jsx  Footer.jsx  LandingPage.jsx
-    ExplorePage.jsx  FilterBar.jsx  DestinationCard.jsx
-    DestinationDetail.jsx  MapView.jsx
+    Navbar.jsx  Footer.jsx  ErrorBoundary.jsx  icons.jsx
+    LandingPage.jsx  ExplorePage.jsx  FilterBar.jsx
+    DestinationCard.jsx  DestinationDetail.jsx  MapView.jsx
 ```
 
-## 🚀 Next ideas
+## Deployment
 
-- Favorites with localStorage · user reviews · itinerary builder
-- Marker clustering for 100+ places · PWA offline pack · dark mode
+Connected to Vercel — every push to `main` auto-deploys. Build command `npm run build`, output `dist/`.
+
+## Roadmap ideas
+
+- Favorites with localStorage · user reviews · 3-day itinerary builder
+- Marker clustering at 100+ places · PWA offline pack · dark mode
+- Events/festivals section when a keyless source fits
+
+## Author
+
+**JANVI-CHATURVEDI** — https://github.com/JANVI-CHATURVEDI
